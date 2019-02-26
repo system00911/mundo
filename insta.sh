@@ -4,7 +4,7 @@ url=$1
 # remove ALL LVS
 lvremove -f `lvscan | cut -d"'" -f2 | xargs`
 # remove ALL LVG
-vgremove `vgscan | grep Found | cut -d'"' -f2| xargs`
+vgremove -f `vgscan | grep Found | cut -d'"' -f2| xargs`
 # get ALL DISK
 #disks=`lsblk | grep disk | cut -d" " -f1| xargs`
 # create new MBR on the sda

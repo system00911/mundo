@@ -1,6 +1,8 @@
 #!/bin/bash
 # vars
 url=$1
+# unmount if monted
+mount | grep disk && umount `mount | grep disk| cut -d" " -f3| xargs`
 # remove ALL LVS
 lvremove -f `lvscan | cut -d"'" -f2 | xargs`
 # remove ALL LVG
@@ -23,8 +25,8 @@ rm -f /tmp/tmp.blk
 # create VG
 vgcreate vg0 /dev/sda2 -f
 # create lvm
-lvcreate -f -L 1G -n swap vg0
-lvcreate -f -l 100%free -n root vg0
+lvcreate -L 1G -n swap vg0
+lvcreate -l 100%free -n root vg0
 
 # create fs sda1
 mkfs.ext2 -F /dev/sda1
